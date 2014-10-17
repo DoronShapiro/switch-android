@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">switch</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="text_button_switch_on">switch on</string>
+    <string name="text_button_switch_off">switch off</string>
+
+    <string name="text_label_timer">timer:</string>
+    <string name="text_label_setfor">set for </string>
+
+    <string name="text_label_mac">MAC</string>
+    <string name="text_label_updatetime">last updated</string>
+    <string name="text_label_deviceid">id</string>
+    <string name="text_label_status">status</string>
+    <string name="text_label_ssid">wifi network</string>
+    <string name="text_label_voltage">voltage</string>
+    <string name="text_label_current">current</string>
+    <string name="text_label_power">power</string>
+    <string name="text_unit_voltage">V</string>
+    <string name="text_unit_current">A</string>
+    <string name="text_unit_power">W</string>
+    <string name="text_unit_empty"></string>
+
+    <string name="text_error_connection">Could not connect to outlet.</string>
+    <string name="text_error_communication">Could not communicate with outlet.</string>
+
+    <string name="title_agent_url">Agent ID:</string>
+
+    <string name="button_update">Update</string>
+    <string name="button_cancel">Cancel</string>
+
+    <string name="hint_agent_id">e.g. xX1XxXXxXx-x</string>
+
+</resources>
