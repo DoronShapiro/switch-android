@@ -14,7 +14,7 @@ import org.shapiro.doron.impswitch.broadcast_receivers.SwitchBroadcastReceiver;
  */
 public class SwitchAppWidgetProvider extends AppWidgetProvider {
 
-    private static RemoteViews getRemoteViewsWithState(Context context, boolean toggled){
+    public static RemoteViews getRemoteViewsWithState(Context context, boolean toggled){
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget_switch);
 
         int targetBgResourceId = toggled ? R.drawable.widget_bg_on : R.drawable.widget_bg_off;

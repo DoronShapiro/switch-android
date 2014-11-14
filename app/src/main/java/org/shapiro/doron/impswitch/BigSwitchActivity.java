@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.text.format.DateFormat;
+import android.util.Log;
 import android.util.Pair;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -72,7 +73,7 @@ public class BigSwitchActivity extends FragmentActivity
 
                     @Override
                     public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-
+                        Log.v(TAG, String.format("switch request failed with code %s", statusCode));
                     }
                 });
             }
@@ -178,7 +179,9 @@ public class BigSwitchActivity extends FragmentActivity
     public void onSwitch(boolean switchOn) {
         mIsOn = switchOn;
         updateSwitchButtonText(switchOn);
-        mMeteredStatsAdapter.setAutoRefreshState(switchOn);
+        if(mMeteredStatsAdapter != null) { // TODO: there was once a NPE below... fix it for real
+            mMeteredStatsAdapter.setAutoRefreshState(switchOn);
+        }
     }
 
     private void updateSwitchButtonText(boolean switchOn) {
