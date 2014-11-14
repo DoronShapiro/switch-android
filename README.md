@@ -55,4 +55,4 @@ Known Issues
 
 License
 ----
-This projected is licensed under the terms of the [MIT license](http://opensource.org/licenses/MIT).
+This project is licensed under the terms of the [MIT license](http://opensource.org/licenses/MIT).
