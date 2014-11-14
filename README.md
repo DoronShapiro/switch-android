@@ -28,7 +28,7 @@ Building and Configuration
 In [api-keys.xml](app/src/main/res/values/api-keys.xml), replace the string "PUT_SENDER_ID_HERE" with your GCM project number.
 
 #### plugtop Agent ID
-If you have not already, make sure your plugtop device has been programming and configured with the API key recorded in the Google Cloud Messenger section by following the [cloud and device setup instructions](README-SETUP.md).  Take note of the Agent ID found in this section.
+If you have not already, make sure your plugtop device has been programming and configured with the API key recorded in the Google Cloud Messenger section by following the [cloud and device setup instructions](README-SETUP-CLOUD.md).  Take note of the Agent ID found in this section.
 
 In [ImpAgent.java](app/src/main/java/org/shapiro/doron/impswitch/comms/ImpAgent.java), replace the string "PUT_AGENT_ID_HERE" with this Agent ID.
 
