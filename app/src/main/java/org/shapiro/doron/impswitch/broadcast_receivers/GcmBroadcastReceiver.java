@@ -15,7 +15,7 @@ import android.widget.RemoteViews;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 
 import org.shapiro.doron.impswitch.BigSwitchActivity;
-import org.shapiro.doron.impswitch.ImpModel;
+import org.shapiro.doron.impswitch.PlugTopModel;
 import org.shapiro.doron.impswitch.R;
 import org.shapiro.doron.impswitch.SwitchAppWidgetProvider;
 import org.shapiro.doron.impswitch.enums.DeviceStatType;
@@ -70,7 +70,7 @@ public class GcmBroadcastReceiver extends BroadcastReceiver {
                     dataUpdate.put(DeviceStatType.TYPE_CURRENT, current);
                     dataUpdate.put(DeviceStatType.TYPE_POWER, power);
 
-                    ImpModel imp = ImpModel.getInstance();
+                    PlugTopModel imp = PlugTopModel.getInstance();
                     boolean isOn = Integer.parseInt(isOnString) == 1;
                     if(imp.isOn() != isOn){
                         imp.setIsOn(isOn);
@@ -84,7 +84,7 @@ public class GcmBroadcastReceiver extends BroadcastReceiver {
     }
 
     private void dispatchSwitchToWidget(Context context, boolean isOn){
-        ImpModel.getInstance().setIsOn(isOn);
+        PlugTopModel.getInstance().setIsOn(isOn);
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
         ComponentName targetComponent = new ComponentName(context, SwitchAppWidgetProvider.class);
         RemoteViews newView = SwitchAppWidgetProvider.getRemoteViewsWithState(context, isOn);

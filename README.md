@@ -30,7 +30,9 @@ In [api-keys.xml](app/src/main/res/values/api-keys.xml), replace the string "PUT
 #### plugtop Agent ID
 If you have not already, make sure your plugtop device has been programming and configured with the API key recorded in the Google Cloud Messenger section by following the [cloud and device setup instructions](README-SETUP-CLOUD.md).  Take note of the Agent ID found in this section.
 
-In [ImpAgent.java](app/src/main/java/org/shapiro/doron/impswitch/comms/ImpAgent.java), replace the string "PUT_AGENT_ID_HERE" with this Agent ID.
+Once the app is compiled and running on your device, click the menu icon in the upper right-hand corner of the screen.  Select "Settings" and enter the agent ID in the dialog that appears.
+
+The app will now be fully functional.
 
 App Usage
 -----

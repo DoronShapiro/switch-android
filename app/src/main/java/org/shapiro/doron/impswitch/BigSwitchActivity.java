@@ -17,15 +17,14 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Switch;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.doomonafireball.betterpickers.radialtimepicker.RadialPickerLayout;
 import com.doomonafireball.betterpickers.radialtimepicker.RadialTimePickerDialog;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 
 import org.apache.http.Header;
+import org.shapiro.doron.impswitch.comms.AgentConnection;
 import org.shapiro.doron.impswitch.comms.GcmUtility;
-import org.shapiro.doron.impswitch.comms.ImpAgent;
 import org.shapiro.doron.impswitch.listeners.SwitchStatusListener;
 
 import java.util.GregorianCalendar;
@@ -65,7 +64,7 @@ public class BigSwitchActivity extends FragmentActivity
         findViewById(R.id.button_switch).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ImpAgent.sendFlip(new AsyncHttpResponseHandler() {
+                AgentConnection.sendFlip(BigSwitchActivity.this, new AsyncHttpResponseHandler() {
                     @Override
                     public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
 
@@ -78,8 +77,8 @@ public class BigSwitchActivity extends FragmentActivity
                 });
             }
         });
-        onSwitch(ImpModel.getInstance().isOn());
-        ImpModel.getInstance().registerSwitchListener(this);
+        onSwitch(PlugTopModel.getInstance().isOn());
+        PlugTopModel.getInstance().registerSwitchListener(this);
 
         findViewById(R.id.button_refresh).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -158,15 +157,15 @@ public class BigSwitchActivity extends FragmentActivity
         int id = item.getItemId();
         if (id == R.id.action_settings) {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            EditText editText = new EditText(this);
+            final EditText editText = new EditText(this);
             editText.setHint(R.string.hint_agent_id);
-            editText.setText(ImpAgent.getAgentID());
+            editText.setText(AgentManager.getInstance().getAgentID(this));
             builder.setView(editText);
             builder.setTitle(R.string.title_agent_url).
                     setPositiveButton(R.string.button_update, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            Toast.makeText(BigSwitchActivity.this, "unimplemented", Toast.LENGTH_SHORT).show();
+                            AgentManager.getInstance().setAgentID(BigSwitchActivity.this, editText.getText().toString());
                         }
                     }).setNegativeButton(R.string.button_cancel, null);
             builder.show();

@@ -37,10 +37,10 @@ public class SwitchAppWidgetProvider extends AppWidgetProvider {
 
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
         for (int appWidgetId : appWidgetIds){
-            ImpModel impModel = ImpModel.getInstance();
-            impModel.requestSync(context); // Note that the widget may initially be in an incorrect
+            PlugTopModel plugTopModel = PlugTopModel.getInstance();
+            plugTopModel.requestSync(context); // Note that the widget may initially be in an incorrect
                                            // state, but the sync will quickly fix it
-            RemoteViews views = getRemoteViewsWithState(context, impModel.isOn());
+            RemoteViews views = getRemoteViewsWithState(context, plugTopModel.isOn());
             appWidgetManager.updateAppWidget(appWidgetId, views);
         }
     }

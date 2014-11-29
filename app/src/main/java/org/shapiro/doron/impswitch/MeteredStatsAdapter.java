@@ -11,16 +11,12 @@ import android.widget.TextView;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 
 import org.apache.http.Header;
-import org.shapiro.doron.impswitch.comms.ImpAgent;
+import org.shapiro.doron.impswitch.comms.AgentConnection;
 import org.shapiro.doron.impswitch.enums.DeviceStatType;
 import org.shapiro.doron.impswitch.listeners.SwitchMeterListener;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * Created by doron on 10/5/14.
@@ -54,7 +50,7 @@ public class MeteredStatsAdapter extends BaseAdapter {
             }
         };
 
-        ImpModel.getInstance().registerMeterListener(mSwitchMeterListener);
+        PlugTopModel.getInstance().registerMeterListener(mSwitchMeterListener);
 
         mRefreshHandler = new Handler();
         mRefreshRunner = new Runnable() {
@@ -67,7 +63,7 @@ public class MeteredStatsAdapter extends BaseAdapter {
     }
 
     public void close(){
-        ImpModel.getInstance().deregisterMeterListener(mSwitchMeterListener);
+        PlugTopModel.getInstance().deregisterMeterListener(mSwitchMeterListener);
         setAutoRefreshState(false);
     }
 
@@ -81,18 +77,18 @@ public class MeteredStatsAdapter extends BaseAdapter {
     }
 
     public void refresh(){
-        ImpAgent.queryStats(mContext,
+        AgentConnection.queryStats(mContext,
                 new AsyncHttpResponseHandler() {
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                    @Override
+                    public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
 
-            }
+                    }
 
-            @Override
-            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                    @Override
+                    public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
 
-            }
-        });
+                    }
+                });
     }
 
     private DeviceStatType getTypeForPosition(int position){

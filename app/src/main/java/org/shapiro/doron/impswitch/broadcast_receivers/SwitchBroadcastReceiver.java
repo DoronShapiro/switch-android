@@ -12,7 +12,7 @@ import com.loopj.android.http.AsyncHttpResponseHandler;
 import org.apache.http.Header;
 import org.shapiro.doron.impswitch.R;
 import org.shapiro.doron.impswitch.SwitchAlarmManager;
-import org.shapiro.doron.impswitch.comms.ImpAgent;
+import org.shapiro.doron.impswitch.comms.AgentConnection;
 
 /**
  * Created by doron on 10/5/14.
@@ -39,7 +39,7 @@ public class SwitchBroadcastReceiver extends BroadcastReceiver {
         }
 
         if (ACTION_SWITCH.equals(action)) {
-            ImpAgent.sendFlip(new AsyncHttpResponseHandler() {
+            AgentConnection.sendFlip(context, new AsyncHttpResponseHandler() {
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
 
@@ -48,7 +48,7 @@ public class SwitchBroadcastReceiver extends BroadcastReceiver {
                 @Override
                 public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
                     Log.v(TAG, "Switch server command failed: " + statusCode);
-                    switch (statusCode){
+                    switch (statusCode) {
                         case 0:
                             Toast.makeText(context, R.string.text_error_connection, Toast.LENGTH_SHORT).show();
                             break;

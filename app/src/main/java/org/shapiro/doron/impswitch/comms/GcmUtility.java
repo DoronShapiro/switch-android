@@ -38,7 +38,7 @@ public class GcmUtility {
         if (regId.isEmpty()) {
             registerInBackground(context);
         } else {
-            sendRegistrationIdToBackend();
+            sendRegistrationIdToBackend(context);
         }
 
     }
@@ -144,7 +144,7 @@ public class GcmUtility {
 
             @Override
             protected void onPostExecute(String msg) {
-                sendRegistrationIdToBackend();
+                sendRegistrationIdToBackend(context);
                 //mDisplay.append(msg + "\n");
             }
 
@@ -167,8 +167,8 @@ public class GcmUtility {
         editor.commit();
     }
 
-    private static void sendRegistrationIdToBackend(){
-        ImpAgent.sendGcmRegistration(regId, new AsyncHttpResponseHandler() {
+    private static void sendRegistrationIdToBackend(Context context){
+        AgentConnection.sendGcmRegistration(context, regId, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
 

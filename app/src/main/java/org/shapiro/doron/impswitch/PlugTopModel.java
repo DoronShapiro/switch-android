@@ -5,7 +5,7 @@ import android.content.Context;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 
 import org.apache.http.Header;
-import org.shapiro.doron.impswitch.comms.ImpAgent;
+import org.shapiro.doron.impswitch.comms.AgentConnection;
 import org.shapiro.doron.impswitch.enums.DeviceStatType;
 import org.shapiro.doron.impswitch.listeners.SwitchMeterListener;
 import org.shapiro.doron.impswitch.listeners.SwitchStatusListener;
@@ -17,29 +17,29 @@ import java.util.Map;
 /**
  * Created by doron on 9/21/14.
  */
-public class ImpModel {
-    private static ImpModel impModel;
+public class PlugTopModel {
+    private static PlugTopModel plugTopModel;
 
     private boolean mIsOn;
     private Map<DeviceStatType, String> mMeterData;
     private LinkedList<SwitchStatusListener> mSwitchStatusListeners;
     private LinkedList<SwitchMeterListener> mSwitchMeterListeners;
 
-    private ImpModel(){
+    private PlugTopModel(){
         mMeterData = new HashMap<DeviceStatType, String>(DeviceStatType.values().length);
         mSwitchStatusListeners = new LinkedList<SwitchStatusListener>();
         mSwitchMeterListeners = new LinkedList<SwitchMeterListener>();
     }
 
-    public static ImpModel getInstance(){
-        if(impModel == null){
-            impModel = new ImpModel();
+    public static PlugTopModel getInstance(){
+        if(plugTopModel == null){
+            plugTopModel = new PlugTopModel();
         }
-        return impModel;
+        return plugTopModel;
     }
 
     public void requestSync(Context context){
-        ImpAgent.queryStats(context, new AsyncHttpResponseHandler() {
+        AgentConnection.queryStats(context, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
 
