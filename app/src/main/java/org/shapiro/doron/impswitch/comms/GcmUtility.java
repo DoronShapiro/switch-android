@@ -7,6 +7,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
@@ -167,7 +168,7 @@ public class GcmUtility {
         editor.commit();
     }
 
-    private static void sendRegistrationIdToBackend(Context context){
+    private static void sendRegistrationIdToBackend(final Context context){
         AgentConnection.sendGcmRegistration(context, regId, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
@@ -176,7 +177,8 @@ public class GcmUtility {
 
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-
+                Log.v(TAG, "Server command failed: error " + statusCode);
+                Toast.makeText(context, R.string.text_error_registration, Toast.LENGTH_SHORT).show();
             }
         });
     }

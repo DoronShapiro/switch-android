@@ -26,6 +26,7 @@
 
     <string name="text_error_connection">Could not connect to outlet.</string>
     <string name="text_error_communication">Could not communicate with outlet.</string>
+    <string name="text_error_registration">Could not register with server.</string>
 
     <string name="title_agent_url">Agent ID:</string>
 

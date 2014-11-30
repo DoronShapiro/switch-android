@@ -2,9 +2,6 @@ package org.shapiro.doron.impswitch;
 
 import android.content.Context;
 
-import com.loopj.android.http.AsyncHttpResponseHandler;
-
-import org.apache.http.Header;
 import org.shapiro.doron.impswitch.comms.AgentConnection;
 import org.shapiro.doron.impswitch.enums.DeviceStatType;
 import org.shapiro.doron.impswitch.listeners.SwitchMeterListener;
@@ -38,16 +35,11 @@ public class PlugTopModel {
         return plugTopModel;
     }
 
-    public void requestSync(Context context){
-        AgentConnection.queryStats(context, new AsyncHttpResponseHandler() {
+    public void requestSync(final Context context){
+        AgentConnection.queryStats(context, new AgentConnection.DefaultAgentResponseHandler() {
             @Override
-            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-
-            }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-
+            public Context getContext() {
+                return context;
             }
         });
     }

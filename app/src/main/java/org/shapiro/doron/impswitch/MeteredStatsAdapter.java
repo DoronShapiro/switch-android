@@ -56,7 +56,7 @@ public class MeteredStatsAdapter extends BaseAdapter {
         mRefreshRunner = new Runnable() {
             @Override
             public void run() {
-                refresh();
+                refresh(false);
                 mRefreshHandler.postDelayed(mRefreshRunner, refreshRate);
             }
         };
@@ -72,23 +72,33 @@ public class MeteredStatsAdapter extends BaseAdapter {
             mRefreshHandler.post(mRefreshRunner);
         } else {
             mRefreshHandler.removeCallbacks(mRefreshRunner);
-            refresh();
+            refresh(false);
         }
     }
 
-    public void refresh(){
-        AgentConnection.queryStats(mContext,
-                new AsyncHttpResponseHandler() {
-                    @Override
-                    public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+    public void refresh(boolean userInitiated){
+        AsyncHttpResponseHandler responseHandler;
+        if(userInitiated){
+            responseHandler = new AgentConnection.DefaultAgentResponseHandler() {
+                @Override
+                public Context getContext() {
+                    return mContext;
+                }
+            };
+        } else {
+            responseHandler = new AsyncHttpResponseHandler() {
+                @Override
+                public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
 
-                    }
+                }
 
-                    @Override
-                    public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                @Override
+                public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
 
-                    }
-                });
+                }
+            };
+        }
+        AgentConnection.queryStats(mContext, responseHandler);
     }
 
     private DeviceStatType getTypeForPosition(int position){

@@ -1,12 +1,12 @@
 package org.shapiro.doron.impswitch;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.text.format.DateFormat;
-import android.util.Log;
 import android.util.Pair;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -20,9 +20,7 @@ import android.widget.TextView;
 
 import com.doomonafireball.betterpickers.radialtimepicker.RadialPickerLayout;
 import com.doomonafireball.betterpickers.radialtimepicker.RadialTimePickerDialog;
-import com.loopj.android.http.AsyncHttpResponseHandler;
 
-import org.apache.http.Header;
 import org.shapiro.doron.impswitch.comms.AgentConnection;
 import org.shapiro.doron.impswitch.comms.GcmUtility;
 import org.shapiro.doron.impswitch.listeners.SwitchStatusListener;
@@ -59,20 +57,15 @@ public class BigSwitchActivity extends FragmentActivity
             mMeteredStatsAdapter = new MeteredStatsAdapter(this, 5000);
         }
         ((ListView) findViewById(R.id.list_stats)).setAdapter(mMeteredStatsAdapter);
-        mMeteredStatsAdapter.refresh();
+        mMeteredStatsAdapter.refresh(false);
 
         findViewById(R.id.button_switch).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AgentConnection.sendFlip(BigSwitchActivity.this, new AsyncHttpResponseHandler() {
+                AgentConnection.sendFlip(BigSwitchActivity.this, new AgentConnection.DefaultAgentResponseHandler() {
                     @Override
-                    public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-
-                    }
-
-                    @Override
-                    public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-                        Log.v(TAG, String.format("switch request failed with code %s", statusCode));
+                    public Context getContext() {
+                        return BigSwitchActivity.this;
                     }
                 });
             }
@@ -83,7 +76,7 @@ public class BigSwitchActivity extends FragmentActivity
         findViewById(R.id.button_refresh).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mMeteredStatsAdapter.refresh();
+                mMeteredStatsAdapter.refresh(true);
             }
         });
 
