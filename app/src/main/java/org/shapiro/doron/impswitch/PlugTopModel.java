@@ -13,6 +13,8 @@ import java.util.Map;
 
 /**
  * Created by doron on 9/21/14.
+ *
+ * Representation of the state of the plugtop device.
  */
 public class PlugTopModel {
     private static PlugTopModel plugTopModel;
@@ -28,6 +30,9 @@ public class PlugTopModel {
         mSwitchMeterListeners = new LinkedList<SwitchMeterListener>();
     }
 
+    /**
+     * Note that this implementation only allows for one instance of the plugtop to be represented.
+     */
     public static PlugTopModel getInstance(){
         if(plugTopModel == null){
             plugTopModel = new PlugTopModel();
@@ -35,6 +40,9 @@ public class PlugTopModel {
         return plugTopModel;
     }
 
+    /**
+     * Initiates a request for all data from the Agent.
+     */
     public void requestSync(final Context context){
         AgentConnection.queryStats(context, new AgentConnection.DefaultAgentResponseHandler() {
             @Override
@@ -44,6 +52,9 @@ public class PlugTopModel {
         });
     }
 
+    /**
+     * Sets the internal state and notifies listeners.  Does not send data to the plugtop.
+     */
     public void setIsOn(boolean isOn){
         boolean statusChanged = mIsOn != isOn;
         mIsOn = isOn;
@@ -52,6 +63,9 @@ public class PlugTopModel {
         }
     }
 
+    /**
+     * Updates the internal meter state with the given data received from the plugtop.
+     */
     public void updateMeterData(Map<DeviceStatType, String> update){
         mMeterData.clear();
         mMeterData.putAll(update);

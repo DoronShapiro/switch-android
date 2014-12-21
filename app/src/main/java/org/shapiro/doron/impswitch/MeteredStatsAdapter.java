@@ -33,7 +33,10 @@ public class MeteredStatsAdapter extends BaseAdapter {
     private final Handler mRefreshHandler;
     private final Runnable mRefreshRunner;
 
-    public MeteredStatsAdapter(Context context, final int refreshRate){
+    /**
+     * @param refreshRateMillis The refresh rate that will be used for the lifetime of this adapter
+     */
+    public MeteredStatsAdapter(Context context, final int refreshRateMillis){
         mAvailablePowerData = new LinkedHashMap<DeviceStatType, String>(TYPES_TO_DISPLAY.length);
         mContext = context;
         mSwitchMeterListener = new SwitchMeterListener() {
@@ -57,7 +60,7 @@ public class MeteredStatsAdapter extends BaseAdapter {
             @Override
             public void run() {
                 refresh(false);
-                mRefreshHandler.postDelayed(mRefreshRunner, refreshRate);
+                mRefreshHandler.postDelayed(mRefreshRunner, refreshRateMillis);
             }
         };
     }
@@ -67,6 +70,9 @@ public class MeteredStatsAdapter extends BaseAdapter {
         setAutoRefreshState(false);
     }
 
+    /**
+     * Turns on and off autorefresh
+     */
     public void setAutoRefreshState(boolean shouldRun){
         if(shouldRun){
             mRefreshHandler.post(mRefreshRunner);
@@ -76,6 +82,10 @@ public class MeteredStatsAdapter extends BaseAdapter {
         }
     }
 
+    /**
+     * Requests a single refresh of meter data.  Will only display connection errors if this is
+     * user-initiated.
+     */
     public void refresh(boolean userInitiated){
         AsyncHttpResponseHandler responseHandler;
         if(userInitiated){

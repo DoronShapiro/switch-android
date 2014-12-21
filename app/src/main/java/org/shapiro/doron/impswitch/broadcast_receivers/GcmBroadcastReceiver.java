@@ -44,7 +44,7 @@ public class GcmBroadcastReceiver extends BroadcastReceiver {
              */
             if (GoogleCloudMessaging.
                     MESSAGE_TYPE_MESSAGE.equals(messageType)) {
-                // Post notification of received message.
+                // To post notification of received message:
                 //sendNotification(context, "Received: " + extras.toString());
                 Log.i(TAG, "Received: " + extras.toString());
 
@@ -83,6 +83,9 @@ public class GcmBroadcastReceiver extends BroadcastReceiver {
         }
     }
 
+    /**
+     * Notifies any home screen widgets to update their visual state
+     */
     private void dispatchSwitchToWidget(Context context, boolean isOn){
         PlugTopModel.getInstance().setIsOn(isOn);
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);

@@ -33,6 +33,11 @@ public class GcmUtility {
 
     private static String regId;
 
+    /**
+     * If no existing Google Cloud Messenger (GCM) exists, register with the GCM servers and obtain
+     * an ID.  If a new ID is obtained, register it with the Agent servers.
+     * Once this process has completed, getId() may be called to get the resulting ID.
+     */
     public static void registerGcmIfNecessary(Context context){
         regId = getRegistrationId(context.getApplicationContext());
 
@@ -44,7 +49,11 @@ public class GcmUtility {
 
     }
 
-    // registerGcmIfNecessary must be called first
+    /**
+     * Getter for the device's GCM ID.  Note that this function must be run after
+     * registerGcmIfNecessary() to ensure that a GCM ID has been obtained.
+     * @return This device's GCM ID if it exists. Otherwise, returns the empty string.
+     */
     public static String getId(Context context){
         if(regId != null && !regId.isEmpty()){
             return regId;
@@ -52,6 +61,12 @@ public class GcmUtility {
         return getRegistrationId(context);
     }
 
+    /**
+     * Checks whether this device supports Google Play Services.  Call this method before running
+     * any code that depends on the Services.
+     * If the device does not support the services, end the given activity.
+     * @return Whether this device supports Google Play Services.
+     */
     public static boolean checkPlayServices(Activity activity) {
         int resultCode = GooglePlayServicesUtil.isGooglePlayServicesAvailable(activity);
         if (resultCode != ConnectionResult.SUCCESS) {

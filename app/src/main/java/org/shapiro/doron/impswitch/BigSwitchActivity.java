@@ -53,11 +53,26 @@ public class BigSwitchActivity extends FragmentActivity
 
         setContentView(R.layout.activity_big_switch);
 
+        /****************************/
+        /* Stat meter configuration */
+        /****************************/
+
         if(mMeteredStatsAdapter == null){
             mMeteredStatsAdapter = new MeteredStatsAdapter(this, 5000);
         }
         ((ListView) findViewById(R.id.list_stats)).setAdapter(mMeteredStatsAdapter);
         mMeteredStatsAdapter.refresh(false);
+
+        findViewById(R.id.button_refresh).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mMeteredStatsAdapter.refresh(true);
+            }
+        });
+
+        /*******************************/
+        /* Switch button configuration */
+        /*******************************/
 
         findViewById(R.id.button_switch).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -73,12 +88,9 @@ public class BigSwitchActivity extends FragmentActivity
         onSwitch(PlugTopModel.getInstance().isOn());
         PlugTopModel.getInstance().registerSwitchListener(this);
 
-        findViewById(R.id.button_refresh).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mMeteredStatsAdapter.refresh(true);
-            }
-        });
+        /***********************/
+        /* Alarm configuration */
+        /***********************/
 
         mAlarmStatusView = (TextView) findViewById(R.id.content_timer_display);
         mAlarmStatusView.setOnClickListener(new View.OnClickListener() {
@@ -167,6 +179,11 @@ public class BigSwitchActivity extends FragmentActivity
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * Sets the window's state for the plugtop.  Sets the stat meter display to only auto-refresh
+     * when the plugtop is on.
+     * @param switchOn The new state of the plugtop
+     */
     @Override
     public void onSwitch(boolean switchOn) {
         mIsOn = switchOn;

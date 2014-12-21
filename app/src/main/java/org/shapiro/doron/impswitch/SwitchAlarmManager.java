@@ -64,6 +64,10 @@ public class SwitchAlarmManager {
         registerAlarmWithSystem();
     }
 
+    /**
+     * Sets the alarm time and enables the alarm.  Note that setAlarmEnabled does not need to be
+     * called after this.
+     */
     public void setAlarmTimeAndEnable(int hourOfDay, int minute){
         SharedPreferences.Editor timerPrefsEditor = mTimerPrefs.edit();
         timerPrefsEditor.putInt(TIMER_PREFS_KEY_HOUR, hourOfDay);

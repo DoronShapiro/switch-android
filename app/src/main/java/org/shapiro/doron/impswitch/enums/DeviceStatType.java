@@ -4,6 +4,9 @@ import org.shapiro.doron.impswitch.R;
 
 /**
  * Created by doron on 10/10/14.
+ *
+ * Represents a kind of statistic the device measures about its current state, along with
+ * information on how to display it.
  */
 public enum DeviceStatType {
     TYPE_POWER("power", R.string.text_label_power, R.string.text_unit_power),

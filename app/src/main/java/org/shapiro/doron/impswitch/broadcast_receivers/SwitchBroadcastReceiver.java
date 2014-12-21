@@ -27,6 +27,7 @@ public class SwitchBroadcastReceiver extends BroadcastReceiver {
         if(extras != null && !extras.isEmpty()){
             boolean isAlarm = intent.getBooleanExtra(EXTRA_ISALARM, false);
 
+            // Turn off alarms after they fire
             if(isAlarm){
                 Log.v(TAG, "switch broadcast was an alarm");
                 SwitchAlarmManager.getInstance(context).setAlarmEnabled(false);

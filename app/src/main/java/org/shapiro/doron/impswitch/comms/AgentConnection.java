@@ -18,9 +18,18 @@ import org.shapiro.doron.impswitch.enums.CloudCommand;
  */
 public class AgentConnection {
 
+    /**
+     * A default AsyncHttpResponseHandler for use in any of this class's message-sending methods.
+     * Does nothing if the message is successfully sent but logs the error and displays a relevant
+     * error message in a Toast on failure.
+     */
     public abstract static class DefaultAgentResponseHandler extends AsyncHttpResponseHandler{
         private static final String TAG = "c.AC.DARH";
 
+        /**
+         * Injects a Context used to display a Toast on error.
+         * @return The provided Context.
+         */
         public abstract Context getContext();
 
         @Override
@@ -55,14 +64,27 @@ public class AgentConnection {
         return BASE_AGENT_URL + id;
     }
 
+    /**
+     * Sends a message to the cloud to flip the state of the plugtop.
+     * @param responseHandler A callback for the resulting HTTP request.
+     */
     public static void sendFlip(Context context, AsyncHttpResponseHandler responseHandler){
         sendValue(context, CloudCommand.KEY_SWITCH, "2", responseHandler);
     }
 
+    /**
+     * Sends a message to the cloud to register this device's Google Cloud Messenger ID.
+     * @param id The GCM ID to register.
+     * @param responseHandler A callback for the resulting HTTP request.
+     */
     public static void sendGcmRegistration(Context context, String id, AsyncHttpResponseHandler responseHandler){
         sendValue(context, CloudCommand.KEY_REGISTER_GCM, id, responseHandler);
     }
 
+    /**
+     * Sends a message to the cloud requesting that the plugtop send meter information (voltage, etc)
+     * @param responseHandler A callback for the resulting HTTP request.
+     */
     public static void queryStats(Context context, AsyncHttpResponseHandler responseHandler){
         String gcmId = GcmUtility.getId(context);
         if(gcmId != null) {
